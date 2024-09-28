@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deals Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            position: relative;
+        }
+
+        /* Hamburger Menu */
+        header .hamburger {
+            cursor: pointer;
+            font-size: 24px;
+            position: relative;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 10px;
+            background-color: #333;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .dropdown a {
+            display: block;
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+        }
+
+        .dropdown a:hover {
+            background-color: #575757;
+        }
+
+        /* Make dropdown visible when hovering over hamburger or the dropdown itself */
+        .hamburger:hover .dropdown, 
+        .dropdown:hover {
+            display: block;
+        }
+
+        /* Filter Dropdown */
+        .filter {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        .filter-dropdown {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            background-color: #333;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .filter-dropdown a {
+            display: block;
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+        }
+
+        .filter-dropdown a:hover {
+            background-color: #575757;
+        }
+
+        header .filter:hover .filter-dropdown {
+            display: block;
+        }
+
+        header .search-bar {
+            flex-grow: 1;
+            margin: 0 15px;
+            max-width: 400px;
+        }
+
+        header .search-bar input {
+            width: 100%;
+            padding: 8px;
+            text-align: center;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .button-group button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .deal-box {
+            background-color: white;
+            margin: 20px auto;
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 600px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+        }
+
+        .deal-box h2 {
+            margin: 0 0 10px;
+        }
+
+        .deal-box .vote {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .deal-box .vote span {
+            cursor: pointer;
+            font-size: 48px;
+            margin: 10px 0;
+            color: grey;
+        }
+
+        .deal-box .vote .upvoted {
+            color: green;
+        }
+
+        .deal-box .vote .downvoted {
+            color: red;
+        }
+
+        .deal-box .info {
+            flex-grow: 1;
+        }
+
+        .deal-box .info p {
+            margin: 5px 0;
+        }
+
+        .deal-box .categories {
+            margin-top: 10px;
+        }
+
+        .deal-box .categories span {
+            background-color: #eee;
+            padding: 5px 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="hamburger">
+        &#9776;
+        <div class="dropdown">
+            <a href="home.html">Home</a>
+            <a href="map.html">Map</a>
+            <a href="account.html">Account</a>
+            <a href="about.html">About</a>
+        </div>
+    </div>
+    <div class="search-bar">
+        <input type="text" placeholder="Search...">
+    </div>
+    <div class="filter">
+        &#9881;
+        <div class="filter-dropdown">
+            <a href="#">Filter by Category</a>
+            <a href="#">Filter by Distance</a>
+        </div>
+    </div>
+</header>
+
+<div class="button-group">
+    <button>Popular</button>
+    <button>Nearby</button>
+    <button>New</button>
+</div>
+
+<div class="deal-box">
+    <div class="vote">
+        <span class="upvote" onclick="vote(this, 'up')">&uarr;</span>
+        <div>200</div>
+        <span class="downvote" onclick="vote(this, 'down')">&darr;</span>
+    </div>
+    <div class="info">
+        <h2>20% off Roku TV</h2>
+        <p><strong>Location:</strong> Best Buy, Madison, WI</p>
+        <p><strong>Distance:</strong> 3 mi</p>
+        <p><strong>Posted:</strong> 11/11/23</p>
+        <p><strong>Good until:</strong> 12/2023</p>
+        <div class="categories">
+            <span>Electronics</span>
+            <span>TV</span>
+        </div>
+    </div>
+</div>
+
+<div class="deal-box">
+    <div class="vote">
+        <span class="upvote" onclick="vote(this, 'up')">&uarr;</span>
+        <div>150</div>
+        <span class="downvote" onclick="vote(this, 'down')">&darr;</span>
+    </div>
+    <div class="info">
+        <h2>BOGO Whole Milk</h2>
+        <p><strong>Location:</strong> Whole Foods, Shorewood Hills, WI</p>
+        <p><strong>Distance:</strong> 1 mi</p>
+        <p><strong>Posted:</strong> 11/11/23</p>
+        <p><strong>Good until:</strong> 12/2023</p>
+        <div class="categories">
+            <span>Dairy</span>
+            <span>Food</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    function vote(element, type) {
+        const parent = element.parentElement;
+        const upvote = parent.querySelector('.upvote');
+        const downvote = parent.querySelector('.downvote');
+
+        if (type === 'up') {
+            if (upvote.classList.contains('upvoted')) {
+                upvote.classList.remove('upvoted');
+            } else {
+                upvote.classList.add('upvoted');
+                downvote.classList.remove('downvoted');
+            }
+        } else if (type === 'down') {
+            if (downvote.classList.contains('downvoted')) {
+                downvote.classList.remove('downvoted');
+            } else {
+                downvote.classList.add('downvoted');
+                upvote.classList.remove('upvoted');
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
