@@ -1,0 +1,7 @@
+<h1>{{post.product_name}}</h1>
+
+<ul>
+    {% for comment in post.comment_set.all %}
+        <li>{{comment.body_text}}</li>
+    {% endfor %}
+</ul>
