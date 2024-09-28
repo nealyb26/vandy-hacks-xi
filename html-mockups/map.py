@@ -19,7 +19,7 @@ coords = [item[1] for item in nash_pairs]
 
 # Create a map object centered on me
 vandy = [36.1627, -86.7816]
-my_map = folium.Map(location=vandy, zoom_start=13, control_scale=True, )
+my_map = folium.Map(location=vandy, zoom_start=13, control_scale=True)
 #width =500, height = 500
 
 # my location as star
@@ -58,5 +58,15 @@ for name, (lat, lon) in nash_pairs:
     # Add the marker to the cluster
     marker.add_to(marker_cluster)
 
+# Add custom JavaScript for the back button
+my_map.get_root().html.add_child(folium.Element("""
+    <div style="position: absolute; top: 80px; left: 10px; z-index: 1000;">
+        <button onclick="window.location.href='homepage.html'" 
+                style="background-color: white; border: 2px solid #007bff; border-radius: 5px; padding: 5px; cursor: pointer;">
+            Back
+        </button>
+    </div>
+"""))
+
 # Save the map to an HTML file
-my_map.save("map.html")
+my_map.save("html-mockups/map.html")
