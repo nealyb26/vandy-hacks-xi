@@ -1,13 +1,16 @@
 <h1>{{post.product_name}}</h1>
 <h3>Information: {{post.info_text}}</h3>
-<form method="post" action="{% url 'deals:upvote_post' post.id %}">
+<form method="post" action="{% url 'deals:vote' post.id %}">
     {% csrf_token %}
-    <button type="submit">Upvote</button>
+    <button type="submit" name="upvote">Upvote</button>
+
+    <h3>↑ {{post.upvotes}}</h3>
+    <h3>↓ {{post.downvotes}}</h3>
+    <ul>
+        {% for comment in post.comment_set.all %}
+            <li>{{comment.body_text}}</li>
+        {% endfor %}
+    </ul>
+
+    <button type="submit" name="downvote">Downvote</button>
 </form>
-<h3>↑ {{post.upvotes}}</h3>
-<h3>↓ {{post.downvotes}}</h3>
-<ul>
-    {% for comment in post.comment_set.all %}
-        <li>{{comment.body_text}}</li>
-    {% endfor %}
-</ul>

@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import timezone
 from django.urls import reverse
-from django.db.models import Q
+from django.db.models import Q, F
 
 from .models import Post, Comment
 
@@ -37,8 +37,11 @@ def search(request) -> HttpResponse:
     post_list = Post.objects.filter(filter_set)
     return render(request, "deals/search.html", {"query": get_query, "post_list" : post_list})
 
-def upvote_post(request, post_id):
+def vote(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    post.upvotes += 1
+    if "upvote" in request.POST:
+        post.upvotes = F("upvotes") + 1
+    elif "downvote" in request.POST:
+        post.downvotes = F("downvotes") + 1
     post.save()
     return redirect('deals:detail', post_id = post.id)
