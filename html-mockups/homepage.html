@@ -22,11 +22,16 @@
             position: relative;
         }
 
-        /* Hamburger Menu */
-        header .hamburger {
-            cursor: pointer;
-            font-size: 24px;
+        /* Wrap hamburger icon and dropdown in one container */
+        .hamburger-container {
             position: relative;
+            display: inline-block;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            cursor: pointer;
+            font-size: 40px;
         }
 
         /* Dropdown Menu */
@@ -34,7 +39,7 @@
             display: none;
             position: absolute;
             top: 50px;
-            left: 10px;
+            left: 0;
             background-color: #333;
             box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
             z-index: 1;
@@ -53,9 +58,8 @@
             background-color: #575757;
         }
 
-        /* Make dropdown visible when hovering over hamburger or the dropdown itself */
-        .hamburger:hover .dropdown, 
-        .dropdown:hover {
+        /* Show dropdown on hover over the container */
+        .hamburger-container:hover .dropdown {
             display: block;
         }
 
@@ -64,14 +68,14 @@
             position: relative;
             display: inline-block;
             cursor: pointer;
-            font-size: 24px;
+            font-size: 40px;
         }
 
         .filter-dropdown {
             display: none;
             position: absolute;
-            top: 50px;
-            right: 10px;
+            top: 40px;
+            right: -10px;
             background-color: #333;
             box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
             z-index: 1;
@@ -84,6 +88,7 @@
             color: white;
             padding: 12px 16px;
             text-decoration: none;
+            font-size: 18px;
         }
 
         .filter-dropdown a:hover {
@@ -183,8 +188,9 @@
 <body>
 
 <header>
-    <div class="hamburger">
-        &#9776;
+    <!-- Hamburger and Dropdown now wrapped together -->
+    <div class="hamburger-container">
+        <div class="hamburger">&#9776;</div>
         <div class="dropdown">
             <a href="home.html">Home</a>
             <a href="map.html">Map</a>
@@ -249,6 +255,7 @@
 </div>
 
 <script>
+    // Voting system logic
     function vote(element, type) {
         const parent = element.parentElement;
         const upvote = parent.querySelector('.upvote');
