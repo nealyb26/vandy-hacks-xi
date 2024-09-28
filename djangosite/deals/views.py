@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import timezone
 from django.urls import reverse
+from django.db.models import Q
 
 from .models import Post, Comment
 
@@ -25,3 +26,13 @@ def submit_handler(request) -> HttpResponse:
     except (KeyError):
         return render(request, "deals/create-post.html", {"error_message": "Necessary fields not filled out"})
     return HttpResponseRedirect(reverse("deals:home"))
+
+def search(request) -> HttpResponse:
+    if 'q' not in request.GET:
+        return HttpResponse("you're supposed to do a request ya idjit!")
+    get_query = request.GET['q']
+    filter_set = Q()
+    for q in get_query.split(' '):
+        filter_set &= Q(product_name__contains=q) | Q(location__contains=q) | Q(info_text__contains=q)
+    post_list = Post.objects.filter(filter_set)
+    return render(request, "deals/search.html", {"query": get_query, "post_list" : post_list})
