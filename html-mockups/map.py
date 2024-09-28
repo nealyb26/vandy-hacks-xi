@@ -59,4 +59,4 @@ for name, (lat, lon) in nash_pairs:
     marker.add_to(marker_cluster)
 
 # Save the map to an HTML file
-my_map.save("map.html")
+my_map.save("html-mockups/map.html")
