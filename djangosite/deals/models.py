@@ -3,8 +3,9 @@ from django.db import models
 class Post(models.Model):
     product_name = models.CharField(max_length=200)
     location = models.CharField(max_length = 200) # TODO: Change to location info
-    info_text = models.CharField(max_length = 200)
-    score = models.IntegerField(default=0)
+    info_text = models.CharField(max_length = 500)
+    upvotes = models.IntegerField(default = 0)
+    downvotes = models.IntegerField(default = 0)
     post_date = models.DateTimeField("date posted")
 
     def __str__(self) -> str:
