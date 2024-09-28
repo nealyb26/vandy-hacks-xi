@@ -73,7 +73,30 @@
             margin-right: 10px;
         }
 
-        
+        /* New Post Button */
+        .new-post-btn {
+            position: fixed;           /* Stays fixed in position even when scrolling */
+            bottom: 20px;              /* Position from bottom */
+            right: 20px;               /* Position from right */
+            width: 60px;               /* Width of the button */
+            height: 60px;              /* Height of the button */
+            background-color: #007bff; /* Button color (Bootstrap primary blue) */
+            color: white;              /* Text color */
+            border: none;              /* No border */
+            border-radius: 50%;        /* Make it a circle */
+            font-size: 36px;           /* Larger font size for the '+' */
+            display: flex;             /* Flexbox to center '+' inside the circle */
+            justify-content: center;   /* Horizontally center */
+            align-items: center;       /* Vertically center */
+            cursor: pointer;           /* Pointer cursor for hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+            z-index: 1000;             /* Ensure it's above other elements */
+        }
+
+        /* Hover effect for the button */
+        .new-post-btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
     </style>
 </head>
 <body>
@@ -181,6 +204,9 @@
         <!-- Add more deal boxes as needed -->
     </div>
 </div>
+
+<!-- New Post Button -->
+<button class="new-post-btn" aria-label="New Post">+</button>
 
 <!-- Bootstrap JS and Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
