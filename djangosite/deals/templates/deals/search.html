@@ -138,6 +138,29 @@
         .downvote.active {
             color: darkred; /* Darker red when active */
         }
+
+        /* Report flag styling for bottom-right corner */
+        .report-flag {
+            position: absolute;
+            bottom: 10px; /* Move to bottom */
+            right: 10px; /* Align to the right */
+            background-color: white;
+            color: red;
+            padding: 3px 8px; /* Smaller padding */
+            border-radius: 15px; /* Smaller radius */
+            font-weight: bold;
+            font-size: 0.75rem; /* Smaller font size */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+            display: flex;
+            align-items: center;
+            gap: 3px; /* Smaller gap */
+            cursor: pointer;
+        }
+
+        .report-flag .flag-icon {
+            font-size: 0.9rem; /* Smaller flag icon */
+        }
+
     </style>
 </head>
 <body>
@@ -218,7 +241,7 @@
 
                 <div class="col-md-6 col-lg-4">
                     <a href="{% url 'deals:detail' item.post.id %}" style="text-decoration: none; color: inherit;">
-                        <div class="card mb-4 shadow-sm">
+                        <div class="card mb-4 shadow-sm position-relative">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <div>
@@ -241,19 +264,22 @@
                                 {% for tag in post.tags.all %}
                                     <span class="badge bg-primary">{{ tag }}</span>
                                 {% endfor %}
-                            
+                            </div>
+                            <!-- Report Button with Red Flag -->
+                            <div class="report-flag">
+                                <span>Report</span> <span class="flag-icon">🚩</span>
                             </div>
                         </div>
                     </a>
                 </div>
 
             {% endfor %}
-            </ul>
         {% else %}
             <p>No posts are available.</p>
         {% endif %}
     </div>
 </div>
+
 
 <!-- New Post Button -->
 <a class="new-post-btn" aria-label="New Post" href="{% url 'deals:submit' %}">+</a>

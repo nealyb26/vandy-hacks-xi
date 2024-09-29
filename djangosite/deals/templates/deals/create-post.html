@@ -24,7 +24,6 @@
         /* Back button styling */
         .back-button {
             display: inline-block;
-            margin-bottom: 20px;
             font-size: 18px;
             background-color: #dc3545; /* Red button */
             color: white;
@@ -32,6 +31,12 @@
             border-radius: 50px; /* Rounded button */
             text-decoration: none;
             transition: background-color 0.3s;
+            
+            /* Position the back button at the top left corner */
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000; /* Ensures it stays on top of other elements */
         }
 
         .back-button:hover {
