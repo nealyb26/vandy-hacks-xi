@@ -8,8 +8,45 @@ from django.db.models import Q, F
 from .models import Post, Comment
 
 def home(request) -> HttpResponse:
-    context = {"query": "", "post_list": Post.objects.order_by("-post_date")}
-    return render(request, "deals/search.html", context)
+    user_lat = request.COOKIES.get('user_lat')
+    user_long = request.COOKIES.get('user_long')
+    print(user_lat, user_long)
+
+    if user_lat and user_long:
+        user_coordinates = (float(user_lat), float(user_long))
+    else:
+        user_coordinates =  None
+
+    post_list = Post.objects.all().order_by("-post_date")
+    post_data = []
+
+    if user_coordinates:
+        for post in post_list:
+            post_coordinates = (post.location_lat, post.location_long)
+            distance = geodesic(user_coordinates, post_coordinates).miles
+            post_data.append({
+                'post': post,
+                'distance': round(distance, 2),  # Round to 2 decimal places
+            })
+    else:
+        post_data = [{'post': post, 'distance': None} for post in post_list]
+    context = {
+        "query": "",
+        'post_data': post_data
+    }
+
+    #context = {"post_list": Post.objects.order_by("-post_date")}
+    response = render(request, 'deals/search.html', context)
+
+    if not user_coordinates:
+        # Use JavaScript to get user location and set the cookies (explained below)
+        response.set_cookie('user_lat', '')
+        response.set_cookie('user_long', '')
+
+    return response
+
+    # context = {"query": "", "post_list": Post.objects.order_by("-post_date")}
+    # return render(request, "deals/search.html", context)
 
 def detail(request, post_id: int) -> HttpResponse:
     post = get_object_or_404(Post, pk=post_id)

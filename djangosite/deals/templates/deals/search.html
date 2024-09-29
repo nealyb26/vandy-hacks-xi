@@ -233,7 +233,7 @@
                                             {% csrf_token %}
                                             <input type="hidden" name="original page" value="{% url 'deals:search' %}?q={{query}}">
                                             <button class="vote-btn upvote" name="upvote">&uarr;</button>
-                                            <span>{{ post.score }}</span>
+                                            <span>{{ item.post.score }}</span>
                                             <button class="vote-btn downvote" name="downvote">&darr;</button>
                                         </form>
                                     </div>
