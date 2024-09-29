@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import timezone
 from django.urls import reverse
 from django.db.models import Q, F
@@ -7,8 +7,8 @@ from django.db.models import Q, F
 from .models import Post, Comment
 
 def home(request) -> HttpResponse:
-    context = {"post_list": Post.objects.order_by("-post_date")}
-    return render(request, "deals/home.html", context)
+    context = {"query": "", "post_list": Post.objects.order_by("-post_date")}
+    return render(request, "deals/search.html", context)
 
 def detail(request, post_id: int) -> HttpResponse:
     post = get_object_or_404(Post, pk=post_id)
@@ -44,8 +44,16 @@ def search(request) -> HttpResponse:
     get_query = request.GET['q']
     filter_set = Q()
     for q in get_query.split(' '):
-        filter_set &= Q(product_name__contains=q) | Q(location_name__contains=q) | Q(info_text__contains=q)
-    post_list = Post.objects.filter(filter_set)
+        filter_set &= Q(product_name__contains=q) | Q(location_name__contains=q) | Q(info_text__contains=q) | Q(tags__name__contains=q)
+    
+    sort = "-post_date"
+    if "sort" in request.GET:
+        sort = request.GET["sort"]
+        # e.g. '-score'
+    
+    post_list = Post.objects.filter(filter_set).order_by(sort)
+
+
     return render(request, "deals/search.html", {"query": get_query, "post_list" : post_list})
 
 def vote(request, post_id):
