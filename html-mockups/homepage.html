@@ -124,10 +124,16 @@
                 </li>
             </ul>
             <!-- Search Bar (Bootstrap) -->
-            <form class="d-flex">
+            <!-- <form class="d-flex">
                 <input class="form-control search-bar me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success search-button" type="submit">Search</button>
+            </form> -->
+
+            <form action="{% url 'deals:search' %}" method="get" class="d-flex">
+                <input type="text" name="q" placeholder="Search..." class="form-control search-bar me-2" type="search" aria-label="Search">
+                <button class="btn btn-outline-success search-button" type="submit">Search</button>           
             </form>
+
             <!-- Filter Dropdown (Custom Funnel Icon) -->
             <!-- Funnel Dropdown (Custom Funnel Icon) -->
             <div class="nav-item dropdown">
@@ -156,51 +162,42 @@
 <!-- Bootstrap Deal Boxes (Cards) -->
 <div class="container">
     <div class="row">
-        <div class="col-md-6 col-lg-4">
-            <div class="card mb-4 shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title">20% off Roku TV</h5>
-                            <p class="card-text"><strong>Location:</strong> Best Buy, Madison, WI</p>
-                            <p class="card-text"><strong>Distance:</strong> 3 mi</p>
-                            <p class="card-text"><strong>Posted:</strong> 11/11/23</p>
-                            <p class="card-text"><strong>Good until:</strong> 12/2023</p>
-                        </div>
-                        <div class="d-flex flex-column align-items-center">
-                            <button class="btn btn-outline-success mb-1">&uarr;</button>
-                            <span>200</span>
-                            <button class="btn btn-outline-danger mt-1">&darr;</button>
-                        </div>
-                    </div>
-                    <span class="badge bg-primary">Electronics</span>
-                    <span class="badge bg-secondary">TV</span>
-                </div>
-            </div>
-        </div>
+        {% if post_list %}
+            <ul>
+            {% for post in post_list %}
+                <li><a href="{% url 'deals:detail' post.id %}">{{ post.product_name }}</a></li>
 
-        <div class="col-md-6 col-lg-4">
-            <div class="card mb-4 shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title">BOGO Whole Milk</h5>
-                            <p class="card-text"><strong>Location:</strong> Whole Foods, Shorewood Hills, WI</p>
-                            <p class="card-text"><strong>Distance:</strong> 1 mi</p>
-                            <p class="card-text"><strong>Posted:</strong> 11/11/23</p>
-                            <p class="card-text"><strong>Good until:</strong> 12/2023</p>
-                        </div>
-                        <div class="d-flex flex-column align-items-center">
-                            <button class="btn btn-outline-success mb-1">&uarr;</button>
-                            <span>200</span>
-                            <button class="btn btn-outline-danger mt-1">&darr;</button>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">{{ post.product_name }}</h5>
+                                    <p class="card-text"><strong>Location:</strong>{{ post.location }}</p>
+                                    <p class="card-text"><strong>Distance:</strong> FIXME mi</p>
+                                    <p class="card-text"><strong>Posted:</strong>{{ post.post_date }}</p>
+                                    <p class="card-text"><strong>Good until:</strong>FIXME Date</p>
+                                </div>
+                                <div class="d-flex flex-column align-items-center">
+                                    <button class="btn btn-outline-success mb-1">&uarr;</button>
+                                    <span>200</span>
+                                    <button class="btn btn-outline-danger mt-1">&darr;</button>
+                                </div>
+                            </div>
+                            <span class="badge bg-primary">Electronics</span>
+                            <span class="badge bg-secondary">TV</span>
                         </div>
                     </div>
-                    <span class="badge bg-primary">Dairy</span>
-                    <span class="badge bg-secondary">Food</span>
                 </div>
-            </div>
-        </div>
+
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No posts are available.</p>
+        {% endif %}
+        
+        
+    
         <!-- Add more deal boxes as needed -->
     </div>
 </div>
