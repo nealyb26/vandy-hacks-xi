@@ -144,3 +144,6 @@ def vote(request, post_id):
         return HttpResponseRedirect(request.POST["original page"])
     else:
         return redirect('deals:home')
+
+def about(request) -> HttpResponse:
+    return render(request, 'deals/about.html')
