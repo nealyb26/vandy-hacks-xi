@@ -194,15 +194,15 @@
                                         <p class="card-text"><strong>Good until: </strong>FIXME Date</p>
                                     </div>
                                     <div class="d-flex flex-column align-items-center">
-                                        <!--<button class="btn btn-outline-success mb-1">&uarr;</button> -->
                                         <button class="vote-btn upvote" onclick="handleVote(event, this, 'up')">&uarr;</button>
                                         <span>{{ post.score }}</span>
-                                        <!-- <button class="btn btn-outline-danger mt-1">&darr;</button> -->
                                         <button class="vote-btn downvote" onclick="handleVote(event, this, 'down')">&darr;</button>
                                     </div>
                                 </div>
-                                <span class="badge bg-primary">Electronics</span>
-                                <span class="badge bg-secondary">TV</span>
+                                {% for tag in post.tags.all %}
+                                    <span class="badge bg-primary">{{ tag }}</span>
+                                {% endfor %}
+                            
                             </div>
                         </div>
                     </a>
