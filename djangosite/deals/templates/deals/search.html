@@ -234,14 +234,14 @@
 
 <!-- Bootstrap Deal Boxes (Cards) -->
 <div class="container">
-    <div class="row">
+    <div class="row g-3">
         {% if post_data %}
             
             {% for item in post_data %}
 
                 <div class="col-md-6 col-lg-4">
                     <a href="{% url 'deals:detail' item.post.id %}" style="text-decoration: none; color: inherit;">
-                        <div class="card mb-4 shadow-sm position-relative">
+                        <div class="card mb-4 shadow-sm h-100">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <div>
