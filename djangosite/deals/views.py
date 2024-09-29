@@ -48,20 +48,14 @@ def search(request) -> HttpResponse:
     post_list = Post.objects.filter(filter_set)
     return render(request, "deals/search.html", {"query": get_query, "post_list" : post_list})
 
-def detail_vote(request, post_id):
+def vote(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if "upvote" in request.POST:
         post.score = F("score") + 1
     elif "downvote" in request.POST:
         post.score = F("score") - 1
     post.save()
-    return redirect('deals:detail', post_id = post.id)
-
-def home_vote(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-    if "upvote" in request.POST:
-        post.score = F("score") + 1
-    elif "downvote" in request.POST:
-        post.score = F("score") - 1
-    post.save()
-    return redirect('deals:home')
+    if "original page" in request.POST:
+        return HttpResponseRedirect(request.POST["original page"])
+    else:
+        return redirect('deals:home')

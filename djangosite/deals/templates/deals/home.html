@@ -189,8 +189,9 @@
                                         <p class="card-text"><strong>Good until: </strong>FIXME Date</p>
                                     </div>
                                     <div class="d-flex flex-column align-items-center">
-                                        <form method="post" action="{% url 'deals:homevote' post.id %}">
+                                        <form method="post" action="{% url 'deals:vote' post.id %}">
                                             {% csrf_token %}
+                                            <input type="hidden" name="original page" value="{% url 'deals:home'%}">
                                             <button class="vote-btn upvote" name="upvote">&uarr;</button>
                                             <span>{{ post.score }}</span>
                                             <button class="vote-btn downvote" name="downvote">&darr;</button>
@@ -265,7 +266,7 @@
         }
 
         // Get the base URL from the template
-        const baseVoteUrl = "{% url 'deals:homevote' 0 %}";  // Use 0 as a placeholder, it will be replaced in JavaScript
+        const baseVoteUrl = "{% url 'deals:vote' 0 %}";  // Use 0 as a placeholder, it will be replaced in JavaScript
         const voteUrl = baseVoteUrl.replace('0', postId);  // Replace the 0 with the actual postId dynamically
 
 
