@@ -147,3 +147,6 @@ def vote(request, post_id):
 
 def about(request) -> HttpResponse:
     return render(request, 'deals/about.html')
+
+def map(request) -> HttpResponse:
+    return render(request, 'deals/map.html')

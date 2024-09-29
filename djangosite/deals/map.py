@@ -56,14 +56,28 @@ for object in object_data_arr:
     marker.add_to(marker_cluster)
 
 # Add custom JavaScript for the back button
-my_map.get_root().html.add_child(folium.Element("""
+'''my_map.get_root().html.add_child(folium.Element("""
     <div style="position: absolute; top: 80px; left: 10px; z-index: 1000;">
-        <button onclick="window.location.href='homepage.html'" 
+        <a class="dropdown-item" href="{% url 'deals:home' %}" 
                 style="background-color: white; border: 2px solid #007bff; border-radius: 5px; padding: 5px; cursor: pointer;">
             Back
-        </button>
+        </a>
+    </div>
+"""))'''
+
+from django.urls import reverse
+# Generate the URL for 'deals:home'
+home_url = reverse('deals:home')
+# Add the element to your map
+my_map.get_root().html.add_child(folium.Element(f"""
+    <div style="position: absolute; top: 80px; left: 10px; z-index: 1000;">
+        <a class="dropdown-item" href="{home_url}" 
+                style="background-color: white; border: 2px solid #007bff; border-radius: 5px; padding: 5px; cursor: pointer;">
+            Back
+        </a>
     </div>
 """))
+
 
 # Save the map to an HTML file
 my_map.save("./deals/templates/deals/map.html")
