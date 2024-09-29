@@ -23,6 +23,7 @@ def submit_handler(request) -> HttpResponse:
         Post.objects.create(
             product_name=request.POST["prod_name"],
             location_name=request.POST["location"],
+            info_text = request.POST["info"],
             post_date=timezone.now())
     except (KeyError):
         return render(request, "deals/create-post.html", {"error_message": "Necessary fields not filled out"})
