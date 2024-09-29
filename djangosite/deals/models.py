@@ -1,12 +1,25 @@
 from django.db import models
 
+class Tag(models.Model):
+    name = models.CharField(max_length=200)
+    color = models.IntegerField(default = 0xFFFFFF)
+
+    def __str__(self) -> str:
+        return self.name
+
 class Post(models.Model):
     product_name = models.CharField(max_length=200)
-    location = models.CharField(max_length = 200) # TODO: Change to location info
+
+    location_name = models.CharField(max_length = 200)
+    location_street_address = models.CharField(max_length = 200)
+    location_lat = models.FloatField(default = 36.1446206)
+    location_long = models.FloatField(default = -86.8032659)
+
     info_text = models.CharField(max_length = 500)
-    upvotes = models.IntegerField(default = 0)
-    downvotes = models.IntegerField(default = 0)
+    score = models.IntegerField(default = 0)
     post_date = models.DateTimeField("date posted")
+
+    tags = models.ManyToManyField(Tag)
 
     def __str__(self) -> str:
         return f"{self.product_name}"

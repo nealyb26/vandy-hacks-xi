@@ -21,7 +21,7 @@ def submit_handler(request) -> HttpResponse:
     try:
         Post.objects.create(
             product_name=request.POST["prod_name"],
-            location=request.POST["location"],
+            location_name=request.POST["location"],
             post_date=timezone.now())
     except (KeyError):
         return render(request, "deals/create-post.html", {"error_message": "Necessary fields not filled out"})
@@ -44,15 +44,15 @@ def search(request) -> HttpResponse:
     get_query = request.GET['q']
     filter_set = Q()
     for q in get_query.split(' '):
-        filter_set &= Q(product_name__contains=q) | Q(location__contains=q) | Q(info_text__contains=q)
+        filter_set &= Q(product_name__contains=q) | Q(location_name__contains=q) | Q(info_text__contains=q)
     post_list = Post.objects.filter(filter_set)
     return render(request, "deals/search.html", {"query": get_query, "post_list" : post_list})
 
 def vote(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if "upvote" in request.POST:
-        post.upvotes = F("upvotes") + 1
+        post.score = F("score") + 1
     elif "downvote" in request.POST:
-        post.downvotes = F("downvotes") + 1
+        post.score = F("score") - 1
     post.save()
     return redirect('deals:detail', post_id = post.id)

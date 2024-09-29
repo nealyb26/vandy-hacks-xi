@@ -4,16 +4,17 @@
     {% csrf_token %}
     <button type="submit" name="upvote">Upvote</button>
 
-    <h3>↑ {{post.upvotes}}</h3>
-    <h3>↓ {{post.downvotes}}</h3>
-    <ul>
-        {% for comment in post.comment_set.all %}
-            <li>{{comment.body_text}}</li>
-        {% endfor %}
-    </ul>
-
+    <h3>↑</h3>
+    <h3>{{post.score}}</h3>
+    <h3>↓</h3>
     <button type="submit" name="downvote">Downvote</button>
 </form>
+
+<ul>
+    {% for comment in post.comment_set.all %}
+        <li>{{comment.body_text}}</li>
+    {% endfor %}
+</ul>
 
 <form action="{% url 'deals:commenthandler' post.id%}" method="post">
     {% csrf_token %}
