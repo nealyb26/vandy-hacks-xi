@@ -27,6 +27,17 @@ def submit_handler(request) -> HttpResponse:
         return render(request, "deals/create-post.html", {"error_message": "Necessary fields not filled out"})
     return HttpResponseRedirect(reverse("deals:home"))
 
+def comment_handler(request, post_id: int) ->HttpResponse:
+    post = get_object_or_404(Post, id=post_id)
+    try:
+        Comment.objects.create(
+            post=post, 
+            body_text=request.POST["comment_text"],
+            post_date=timezone.now())
+    except (KeyError):
+        return render(request, "deals/detail.html", {"error_message": "Necessary fields for comment not filled out"})
+    return HttpResponseRedirect(reverse("deals:detail", kwargs={"post_id": post_id}))
+
 def search(request) -> HttpResponse:
     if 'q' not in request.GET:
         return HttpResponse("you're supposed to do a request ya idjit!")
