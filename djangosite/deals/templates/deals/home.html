@@ -173,14 +173,14 @@
                                 <div class="d-flex justify-content-between">
                                     <div>
                                         <h5 class="card-title">{{ post.product_name }}</h5>
-                                        <p class="card-text"><strong>Location:</strong>{{ post.location }}</p>
-                                        <p class="card-text"><strong>Distance:</strong> FIXME mi</p>
-                                        <p class="card-text"><strong>Posted:</strong>{{ post.post_date }}</p>
-                                        <p class="card-text"><strong>Good until:</strong>FIXME Date</p>
+                                        <p class="card-text"><strong>Location: </strong>{{ post.location }}</p>
+                                        <p class="card-text"><strong>Distance: </strong> FIXME mi</p>
+                                        <p class="card-text"><strong>Posted: </strong>{{ post.post_date }}</p>
+                                        <p class="card-text"><strong>Good until: </strong>FIXME Date</p>
                                     </div>
                                     <div class="d-flex flex-column align-items-center">
                                         <button class="btn btn-outline-success mb-1">&uarr;</button>
-                                        <span>200</span>
+                                        <span>{{ post.upvotes }}</span>
                                         <button class="btn btn-outline-danger mt-1">&darr;</button>
                                     </div>
                                 </div>
