@@ -15,7 +15,7 @@ import folium
 from folium.plugins import MarkerCluster
 # Create a map object centered on me
 vandy = [36.1446206, -86.8032659]
-my_map = folium.Map(location=vandy, zoom_start=13, control_scale=True)
+my_map = folium.Map(location=vandy, zoom_start=12, control_scale=True)
 
 # my location as star
 folium.Marker(
@@ -42,7 +42,7 @@ for object in object_data_arr:
     popup_html += f"<b>Number Upvotes:</b> {object[4]}<br/>"
     popup_html += f"<b>Post Date:</b> {object[5].strftime('%B %d, %Y, %I:%M %p')}<br/>"
     #popup_html += '<b><a href="{}" target="_blank">Link</a></b>'.format('LINK')
-    popup_iframe = folium.IFrame(width=300, height=150, html=popup_html)
+    popup_iframe = folium.IFrame(width=370, height=150, html=popup_html)
 
     # Create a marker with a green dollar sign icon
     marker = folium.Marker(
