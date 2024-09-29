@@ -31,7 +31,7 @@
             border-radius: 5px;
             text-decoration: none;
             transition: background-color 0.3s;
-            z-index: 1000; /* Ensures the button stays on top */
+            z-index: 1000;
         }
 
         .back-button:hover {
@@ -54,6 +54,16 @@
             background-color: #f8f9fa;
             border-radius: 5px;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        /* Align comment date to the right */
+        .comment-date {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 0.9rem;
+            color: #6c757d; /* Gray color for the date */
         }
 
         /* Upvote/Downvote Buttons */
@@ -154,7 +164,10 @@
             <h2 class="comment-heading">Comments</h2>
             <ul class="list-unstyled">
                 {% for comment in post.comment_set.all %}
-                    <li class="comment-item">{{ comment.body_text }}</li>
+                    <li class="comment-item">
+                        {{ comment.body_text }}
+                        <span class="comment-date">{{ comment.post_date }}</span>
+                    </li>
                 {% endfor %}
             </ul>
         </div>
@@ -181,37 +194,3 @@
 </body>
 
 </html>
-
-
-
-
-<!--<h1>{{post.product_name}}</h1>
-<h3>Information: {{post.info_text}}</h3>
-<form method="post" action="{% url 'deals:vote' post.id %}">
-    {% csrf_token %}
-    <input type="hidden" name="original page" value="{% url 'deals:detail' post.id%}">
-    <button type="submit" name="upvote">Upvote</button>
-
-    <h3>↑</h3>
-    <h3 id="score">{{post.score}}</h3>
-    <h3>↓</h3>
-    <button type="submit" name="downvote">Downvote</button>
-</form>
-
-<ul>
-    {% for comment in post.comment_set.all %}
-        <li>{{comment.body_text}}</li>
-    {% endfor %}
-</ul>
-
-<form action="{% url 'deals:commenthandler' post.id%}" method="post">
-    {% csrf_token %}
-    <fieldset>
-        <legend><p>Create Comment</p></legend>
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-        <p>
-            <input type="text" name="comment_text"/>
-        </p>
-    </fieldset>
-    <input type="submit" value="Create">
-</form>-->
