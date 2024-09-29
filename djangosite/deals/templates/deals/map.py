@@ -69,4 +69,4 @@ my_map.get_root().html.add_child(folium.Element("""
 """))
 
 # Save the map to an HTML file
-my_map.save("html-mockups/map.html")
+my_map.save("./deals/templates/deals/map.html")
