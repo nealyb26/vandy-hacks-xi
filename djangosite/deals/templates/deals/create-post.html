@@ -1,4 +1,153 @@
-<form action="{% url 'deals:submithandler'%}" method="post">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        /* Page container */
+        .page-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #f0f8ff; /* Light blue background */
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        }
+
+        /* Back button styling */
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 18px;
+            background-color: #dc3545; /* Red button */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px; /* Rounded button */
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+
+        /* Form styling */
+        fieldset {
+            border: none;
+        }
+
+        legend h1 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #343a40; /* Dark gray heading */
+        }
+
+        /* Input field styling */
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ced4da; /* Light gray border */
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            background-color: #f9f9f9; /* Light background for inputs */
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #007bff; /* Blue border on focus */
+            outline: none;
+        }
+
+        /* Label styling */
+        label {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #495057; /* Darker gray */
+        }
+
+        /* Submit button styling */
+        input[type="submit"] {
+            width: 100%;
+            background-color: #28a745; /* Green button */
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        /* Error message styling */
+        p strong {
+            color: #dc3545; /* Red for error messages */
+            font-weight: bold;
+            text-align: center;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        /* Centering form */
+        form {
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="page-container">
+        <!-- Back Button -->
+        <a href="{% url 'deals:home' %}" class="back-button">← Back</a>
+
+        <!-- Form -->
+        <form action="{% url 'deals:submithandler' %}" method="post">
+            {% csrf_token %}
+            <fieldset>
+                <legend><h1>Create Post</h1></legend>
+                {% if error_message %}
+                    <p><strong>{{ error_message }}</strong></p>
+                {% endif %}
+                <p>
+                    <label for="product">Product:</label>
+                    <input type="text" id="product" name="prod_name" placeholder="Enter product name"/>
+                </p>
+                <p>
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" name="location" placeholder="Enter location"/>
+                </p>
+                <p>
+                    <label for="info">Info:</label>
+                    <input type="text" id="info" name="info_text" placeholder="Enter additional info"/>
+                </p>
+            </fieldset>
+            <input type="submit" value="Create">
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
+
+
+<!--<form action="{% url 'deals:submithandler'%}" method="post">
     {% csrf_token %}
     <fieldset>
         <legend><h1>Create Post</h1></legend>
@@ -17,4 +166,4 @@
         </p>
     </fieldset>
     <input type="submit" value="Create">
-</form>
+</form>-->
