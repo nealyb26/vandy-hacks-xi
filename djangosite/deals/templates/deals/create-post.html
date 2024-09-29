@@ -111,6 +111,10 @@
             margin-top: 20px;
         }
 
+        #tags {
+            height: 50px; /* Adjust the height as needed */
+        }
+
     </style>
 </head>
 
@@ -139,6 +143,32 @@
                 <p>
                     <label for="location">Location:</label>
                     <input type="text" id="location" name="location" placeholder="Enter location"/>
+                </p>
+                <p>
+                    <label for="tags">Tags: (If Applicable)</label>
+                    <select id="tags" name="tags" class="form-select">
+                        <!--<option disabled selected value="">Select Tags</option>-->
+                        <option value="Automotive">Automotive</option>
+                        <option value="Baby">Baby</option>
+                        <option value="Beauty">Beauty</option>
+                        <option value="Clothing, Kid's">Clothing, Kid's</option>
+                        <option value="Clothing, Men's">Clothing, Men's</option>
+                        <option value="Clothing, Women's">Clothing, Women's</option>
+                        <option value="Collectibles & Art">Collectibles & Art</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Groceries">Groceries</option>
+                        <option value="Health & Fitness">Health & Fitness</option>
+                        <option value="Home & Garden">Home & Garden</option>
+                        <option value="Pet Supplies">Pet Supplies</option>
+                        <option value="Restaurants">Restaurants</option>
+                        <option value="Services">Services</option>
+                        <option value="Shoes">Shoes</option>
+                        <option value="Sports & Outdoors">Sports & Outdoors</option>
+                        <option value="Tickets">Tickets</option>
+                        <option value="Toys">Toys</option>
+                        <option value="Wedding">Wedding</option>                        
+                    </select>
                 </p>
             </fieldset>
             <input type="submit" value="Create">
