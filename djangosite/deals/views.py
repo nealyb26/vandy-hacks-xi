@@ -50,11 +50,18 @@ def search(request) -> HttpResponse:
 
 def vote(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    if "action" not in request.POST:
+    #if "action" not in request.POST:
+    if request != "POST" and not request.is_ajax():
         return JsonResponse({'error': 'Invalid request'}, status=400)
-    if request.POST["action"] == "upvote":
-        post.score = F("score") + 1
-    elif request.POST["action"] == "downvote":
+    
+    # if request.POST["action"] == "upvote":
+    #     post.score = F("score") + 1
+    # elif request.POST["action"] == "downvote":
+    #     post.score = F("score") - 1
+
+    if "upvote" in request.POST:
+            post.score = F("score") + 1
+    elif "downvote" in request.POST:
         post.score = F("score") - 1
     post.save()
     return JsonResponse( {'score': post.score} )
