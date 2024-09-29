@@ -254,7 +254,7 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <div>
-                                        <h5 class="card-title">{{ item.post.product_name }}</h5>
+                                        <h5 class="card-title">{{ item.post.product_name|truncatechars:20 }}</h5>
                                         <p class="card-text"><strong>Location: </strong>{{ item.post.location_name }}</p>
                                         <p class="card-text"><strong>Address: </strong>{{ item.post.location_street_address }}</p>
                                         <p class="card-text"><strong>Distance: </strong> {{ item.distance }} mi</p>
