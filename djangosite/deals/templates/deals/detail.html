@@ -1,6 +1,6 @@
 <h1>{{post.product_name}}</h1>
 <h3>Information: {{post.info_text}}</h3>
-<form method="post" action="{% url 'deals:vote' post.id %}">
+<form method="post" action="{% url 'deals:detailvote' post.id %}">
     {% csrf_token %}
     <button type="submit" name="upvote">Upvote</button>
 
@@ -9,9 +9,6 @@
     <h3>↓</h3>
     <button type="submit" name="downvote">Downvote</button>
 </form>
-
-<button id="upvoteButton">Upvote</button>
-<button id="downvoteButton">Downvote</button>
 
 <ul>
     {% for comment in post.comment_set.all %}
@@ -30,32 +27,3 @@
     </fieldset>
     <input type="submit" value="Create">
 </form>
-
-<script>
-    const scoreElement = document.getElementById('score');
-    const upvoteButton = document.getElementById('upvoteButton');
-    const downvoteButton = document.getElementById('downvoteButton');
-    
-    // Function to handle voting
-    function vote(action) {
-        fetch('{% url "deals:vote" post.id %}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRFToken': '{{ csrf_token }}'
-            },
-            body: new URLSearchParams({ 'action': action })  // Send 'upvote' or 'downvote' as POST data
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.score !== undefined) {
-                scoreElement.textContent = data.score;  // Update the score in the UI
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    }
-
-    // Event listeners for upvote and downvote buttons
-    upvoteButton.addEventListener('click', () => vote('upvote'));
-    downvoteButton.addEventListener('click', () => vote('downvote'));
-</script>
