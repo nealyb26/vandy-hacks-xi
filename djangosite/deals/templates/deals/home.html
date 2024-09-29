@@ -119,7 +119,7 @@
 <!-- Bootstrap Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">MyDeals</a>
+        <a class="navbar-brand" href="/app">MyDeals</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -139,11 +139,6 @@
                 </li>
             </ul>
             <!-- Search Bar (Bootstrap) -->
-            <!-- <form class="d-flex">
-                <input class="form-control search-bar me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success search-button" type="submit">Search</button>
-            </form> -->
-
             <form action="{% url 'deals:search' %}" method="get" class="d-flex">
                 <input type="text" name="q" placeholder="Search..." class="form-control search-bar me-2" type="search" aria-label="Search">
                 <button class="btn btn-outline-success search-button" type="submit">Search</button>           
@@ -194,15 +189,15 @@
                                         <p class="card-text"><strong>Good until: </strong>FIXME Date</p>
                                     </div>
                                     <div class="d-flex flex-column align-items-center">
-                                        <!--<button class="btn btn-outline-success mb-1">&uarr;</button> -->
                                         <button class="vote-btn upvote" onclick="handleVote(event, this, 'up')">&uarr;</button>
                                         <span>{{ post.score }}</span>
-                                        <!-- <button class="btn btn-outline-danger mt-1">&darr;</button> -->
                                         <button class="vote-btn downvote" onclick="handleVote(event, this, 'down')">&darr;</button>
                                     </div>
                                 </div>
-                                <span class="badge bg-primary">Electronics</span>
-                                <span class="badge bg-secondary">TV</span>
+                                {% for tag in post.tags.all %}
+                                    <span class="badge bg-primary">{{ tag }}</span>
+                                {% endfor %}
+                            
                             </div>
                         </div>
                     </a>

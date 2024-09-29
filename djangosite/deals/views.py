@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.utils import timezone
 from django.urls import reverse
 from django.db.models import Q, F
@@ -50,9 +50,11 @@ def search(request) -> HttpResponse:
 
 def vote(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    if "upvote" in request.POST:
+    if "action" not in request.POST:
+        return JsonResponse({'error': 'Invalid request'}, status=400)
+    if request.POST["action"] == "upvote":
         post.score = F("score") + 1
-    elif "downvote" in request.POST:
+    elif request.POST["action"] == "downvote":
         post.score = F("score") - 1
     post.save()
-    return redirect('deals:detail', post_id = post.id)
+    return JsonResponse( {'score': post.score} )
