@@ -1,2 +1,3 @@
 .venv
 deals/__pycache__
+/djangosite/deals/__pycache__
