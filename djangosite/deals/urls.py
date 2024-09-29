@@ -11,4 +11,5 @@ urlpatterns = [
     path("submit/", views.submit, name="submit"),
     path("submit_handler", views.submit_handler, name="submithandler"),
     path("search/", views.search, name="search"),
+    path("about/", views.about, name="about"),
 ]
