@@ -5,7 +5,7 @@ from django.urls import reverse
 from geopy.distance import geodesic
 from django.db.models import Q, F
 
-from .models import Post, Comment
+from .models import Post, Comment, Tag
 
 def home(request) -> HttpResponse:
     user_lat = request.COOKIES.get('user_lat')
@@ -57,11 +57,13 @@ def submit(request) -> HttpResponse:
 
 def submit_handler(request) -> HttpResponse:
     try:
-        Post.objects.create(
+        p = Post.objects.create(
             product_name=request.POST["prod_name"],
             location_name=request.POST["location"],
             info_text = request.POST["info"],
             post_date=timezone.now())
+        if "tags" in request.POST:
+            p.tags.add(Tag.objects.get(name=request.POST["tags"]))
     except (KeyError):
         return render(request, "deals/create-post.html", {"error_message": "Necessary fields not filled out"})
     return HttpResponseRedirect(reverse("deals:home"))
