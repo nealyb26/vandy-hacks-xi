@@ -12,11 +12,10 @@ GOOGLE_API_KEY = 'AIzaSyB9BjxwX1cYgLchvrmFQ5vmEsrdB46IIzM'
 gmaps = googlemaps.Client(key=GOOGLE_API_KEY)
 from geopy.distance import geodesic
 
-# Gets store name and coordinates, returns empty array on any error
-#FIXME - needs while loop to continuosly search until option clicked on
-def get_store_information():
+# Gets store name, address, and coordinates, returns empty array on any error
+def get_store_information(query):
     # Get user input for store with autofill
-    query = input("Enter a store: ")
+    #query = input("Enter a store: ")
     try:
         suggestions = gmaps.places_autocomplete(query)
     except Exception as e:

@@ -1,31 +1,25 @@
+#python manage.py shell   
+from deals.models import Post  # Import your Post model
+object_data_arr = [] #product_name, location_name, address, info_text, score, post_date, location_lat, location_long
+for item in Post.objects.all():
+    object_data_arr.append(
+        [item.product_name, item.location_name, item.location_street_address, item.info_text, item.score,
+        item.post_date, item.location_lat, item.location_long]
+    )
+        
+
+print(object_data_arr)
+
+
 import folium
 from folium.plugins import MarkerCluster
-
-# List of coordinates with names
-# Get data post filter
-nash_pairs = [
-    ["Downtown Nashville", (36.1667, -86.7816)],
-    ["Nashville Public Library", (36.1587, -86.7884)],
-    ["The Parthenon", (36.1528, -86.7855)],
-    ["Vanderbilt University", (36.1682, -86.7903)],
-    ["The Gulch", (36.1420, -86.7803)],
-    ["Music Row", (36.1565, -86.7894)],
-    ["Nashville Zoo", (36.1536, -86.8037)],
-    ["Tennessee State Capitol", (36.1692, -86.7854)],
-    ["East Nashville", (36.1408, -86.7855)],
-    ["Bellevue", (36.1794, -86.7746)], ["Bellevue2", (36.1790, -86.7756)], ["Bellevue3", (36.1790, -86.7756)]
-]
-coords = [item[1] for item in nash_pairs]
-
 # Create a map object centered on me
-vandy = [36.1627, -86.7816]
+vandy = [36.1446206, -86.8032659]
 my_map = folium.Map(location=vandy, zoom_start=13, control_scale=True)
-#width =500, height = 500
 
 # my location as star
-my_loc = [36.144051, -86.800949]
 folium.Marker(
-    location=my_loc,
+    location=vandy,
     icon=folium.Icon(icon='star', color='orange', prefix='fa'),  # Font Awesome star icon
     tooltip="My Location"
 ).add_to(my_map)
@@ -39,18 +33,21 @@ marker_cluster = MarkerCluster(
     disableClusteringAtZoom=16  # Disable clustering at higher zoom levels (optional)
 ).add_to(my_map)
 
-
-for name, (lat, lon) in nash_pairs:
-    popup_html = f"<b>Deal:</b> DEAL<br/>"
-    popup_html += f"<b>Store:</b> STORE<br/>"
-    popup_html += f"<b>Address:</b> ADDRESS<br/>"
-    popup_html += '<b><a href="{}" target="_blank">Link</a></b>'.format('LINK')
-    popup_iframe = folium.IFrame(width=200, height=100, html=popup_html)
+#product_name, location_name, address, info_text, score, post_date, location_lat, location_long
+for object in object_data_arr:
+    popup_html = f"<b>Deal:</b> {object[0]}<br/>"
+    popup_html += f"<b>Store:</b> {object[1]}<br/>"
+    popup_html += f"<b>Address:</b> {object[2]}<br/>"
+    popup_html += f"<b>Info:</b> {object[3]}<br/>"
+    popup_html += f"<b>Number Upvotes:</b> {object[4]}<br/>"
+    popup_html += f"<b>Post Date:</b> {object[5].strftime('%B %d, %Y, %I:%M %p')}<br/>"
+    #popup_html += '<b><a href="{}" target="_blank">Link</a></b>'.format('LINK')
+    popup_iframe = folium.IFrame(width=300, height=150, html=popup_html)
 
     # Create a marker with a green dollar sign icon
     marker = folium.Marker(
-        location=[lat, lon],
-        tooltip=name,  # Show the name always when hovering over the marker
+        location=[object[6], object[7]],
+        tooltip=object[0],  # Show the name always when hovering over the marker
         icon=folium.Icon(icon='dollar-sign', color='green', prefix='fa'),
         popup=folium.Popup(popup_iframe)
     )
