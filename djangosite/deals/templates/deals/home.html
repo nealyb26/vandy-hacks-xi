@@ -119,7 +119,7 @@
 <!-- Bootstrap Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">MyDeals</a>
+        <a class="navbar-brand" href="/app">MyDeals</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -139,11 +139,6 @@
                 </li>
             </ul>
             <!-- Search Bar (Bootstrap) -->
-            <!-- <form class="d-flex">
-                <input class="form-control search-bar me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success search-button" type="submit">Search</button>
-            </form> -->
-
             <form action="{% url 'deals:search' %}" method="get" class="d-flex">
                 <input type="text" name="q" placeholder="Search..." class="form-control search-bar me-2" type="search" aria-label="Search">
                 <button class="btn btn-outline-success search-button" type="submit">Search</button>           
