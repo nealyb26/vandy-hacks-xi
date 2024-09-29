@@ -1,4 +1,191 @@
-<h1>{{post.product_name}}</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.product_name }}</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        /* Page container and form spacing */
+        .page-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Back button styling */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            z-index: 1000; /* Ensures the button stays on top */
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Main content styling */
+        h1, h3 {
+            text-align: center;
+        }
+
+        /* Comment List */
+        .comment-list {
+            margin-top: 30px;
+        }
+
+        .comment-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Upvote/Downvote Buttons */
+        .vote-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .vote-btn {
+            background-color: transparent;
+            border: none;
+            font-size: 32px;
+            cursor: pointer;
+        }
+
+        .vote-btn.upvote {
+            color: green;
+        }
+
+        .vote-btn.downvote {
+            color: red;
+        }
+
+        /* Score styling */
+        #score {
+            margin: 0 15px;
+            font-size: 24px;
+        }
+
+        /* Comment Section */
+        .comment-section {
+            margin-top: 40px;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .submit-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Comment heading */
+        .comment-heading {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Back Button at the top left of the screen -->
+    <a href="{% url 'deals:home'%}" class="back-button">← Back </a>
+
+    <!-- Page Container -->
+    <div class="page-container">
+
+        <!-- Post Header -->
+        <h1>{{ post.product_name }}</h1>
+        <p class="lead text-center">{{ post.info_text }}</p>
+
+        <!-- Vote Section -->
+        <form method="post" action="{% url 'deals:vote' post.id %}">
+            {% csrf_token %}
+            <input type="hidden" name="original page" value="{% url 'deals:detail' post.id%}">
+            
+            <div class="vote-section">
+                <!-- Upvote Button -->
+                <button type="submit" name="upvote" class="vote-btn upvote">↑</button>
+                
+                <!-- Score -->
+                <h3 id="score">{{ post.score }}</h3>
+                
+                <!-- Downvote Button -->
+                <button type="submit" name="downvote" class="vote-btn downvote">↓</button>
+            </div>
+        </form>
+
+        <!-- Comment List -->
+        <div class="comment-list">
+            <h2 class="comment-heading">Comments</h2>
+            <ul class="list-unstyled">
+                {% for comment in post.comment_set.all %}
+                    <li class="comment-item">{{ comment.body_text }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Comment Form -->
+        <div class="comment-section">
+            <h2 class="comment-heading">Leave a Comment</h2>
+            <form action="{% url 'deals:commenthandler' post.id%}" method="post">
+                {% csrf_token %}
+                <fieldset>
+                    {% if error_message %}<p class="text-danger"><strong>{{ error_message }}</strong></p>{% endif %}
+                    <p>
+                        <input type="text" name="comment_text" class="comment-input" placeholder="Enter your comment" required />
+                    </p>
+                </fieldset>
+                <input type="submit" value="Create" class="submit-btn">
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+<!--<h1>{{post.product_name}}</h1>
 <h3>Information: {{post.info_text}}</h3>
 <form method="post" action="{% url 'deals:vote' post.id %}">
     {% csrf_token %}
@@ -27,4 +214,4 @@
         </p>
     </fieldset>
     <input type="submit" value="Create">
-</form>
+</form>-->
