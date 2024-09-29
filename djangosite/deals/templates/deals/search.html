@@ -211,24 +211,24 @@
 <!-- Bootstrap Deal Boxes (Cards) -->
 <div class="container">
     <div class="row">
-        {% if post_list %}
+        {% if post_data %}
             
-            {% for post in post_list %}
+            {% for item in post_data %}
 
                 <div class="col-md-6 col-lg-4">
-                    <a href="{% url 'deals:detail' post.id %}" style="text-decoration: none; color: inherit;">
+                    <a href="{% url 'deals:detail' item.post.id %}" style="text-decoration: none; color: inherit;">
                         <div class="card mb-4 shadow-sm">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <div>
-                                        <h5 class="card-title">{{ post.product_name }}</h5>
-                                        <p class="card-text"><strong>Location: </strong>{{ post.location }}</p>
-                                        <p class="card-text"><strong>Distance: </strong> FIXME mi</p>
-                                        <p class="card-text"><strong>Posted: </strong>{{ post.post_date }}</p>
+                                        <h5 class="card-title">{{ item.post.product_name }}</h5>
+                                        <p class="card-text"><strong>Location: </strong>{{ item.post.location_name }}</p>
+                                        <p class="card-text"><strong>Distance: </strong> {{ item.distance }} mi</p>
+                                        <p class="card-text"><strong>Posted: </strong>{{ item.post.post_date }}</p>
                                         <p class="card-text"><strong>Good until: </strong>FIXME Date</p>
                                     </div>
                                     <div class="d-flex flex-column align-items-center">
-                                        <form method="post" action="{% url 'deals:vote' post.id %}">
+                                        <form method="post" action="{% url 'deals:vote' item.post.id %}">
                                             {% csrf_token %}
                                             <input type="hidden" name="original page" value="{% url 'deals:search' %}?q={{query}}">
                                             <button class="vote-btn upvote" name="upvote">&uarr;</button>
@@ -259,6 +259,65 @@
 
 <!-- Bootstrap JS and Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function setCookie(name, value, days) {
+        const d = new Date();
+        d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000)); // cookie expires in "days" # of days
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    }
+
+    // Function to get a cookie by name
+    function getCookie(name) {
+        let value = "; " + document.cookie;
+        let parts = value.split("; " + name + "=");
+        if (parts.length === 2) return parts.pop().split(";").shift();
+        return null;
+    }
+
+    // Get user location using Geolocation API and set cookies
+    function getUserLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                let lat = position.coords.latitude;
+                let long = position.coords.longitude;
+
+                console.log("Location retrieved successfully.");
+
+                // Store latitude and longitude in cookies
+                setCookie('user_lat', lat, 7);  // Expires in 7 days
+                setCookie('user_long', long, 7);
+                setCookie('location_fetched', 'true', 7);  // Set a flag to indicate location has been fetched
+
+                console.log("Location stored in cookies. Latitude:", lat, "Longitude:", long);
+
+                // Reload the page only once after setting the location
+                window.location.reload();
+            }, function (error) {
+                console.error("Geolocation failed: ", error);
+            });
+            
+        } else {
+            console.error("Geolocation is not supported by this browser.");
+        }
+        console.log(execution_number)
+    }
+    // Run this function when the page loads
+    window.onload = function () {
+        console.log("Page loaded. Executing getUserLocation...");
+        // Check if the location has already been fetched
+        const locationFetched = getCookie('location_fetched');
+
+        // Only fetch location if it hasn't been fetched before (i.e., no location_fetched cookie)
+        if (!locationFetched) {
+            console.log("Location not fetched yet. Fetching now...");
+            getUserLocation();
+        } else {
+            console.log("Location already fetched. No need to fetch again.");
+        }
+    };
+</script>
 
 <!-- <script>
     function handleVote(event, button, voteType) {
