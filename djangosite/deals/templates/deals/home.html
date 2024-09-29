@@ -189,9 +189,13 @@
                                         <p class="card-text"><strong>Good until: </strong>FIXME Date</p>
                                     </div>
                                     <div class="d-flex flex-column align-items-center">
-                                        <button class="vote-btn upvote" onclick="handleVote(event, this, 'up')">&uarr;</button>
-                                        <span>{{ post.score }}</span>
-                                        <button class="vote-btn downvote" onclick="handleVote(event, this, 'down')">&darr;</button>
+                                        <form method="post" action="{% url 'deals:vote' post.id %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="original page" value="{% url 'deals:home'%}">
+                                            <button class="vote-btn upvote" name="upvote">&uarr;</button>
+                                            <span>{{ post.score }}</span>
+                                            <button class="vote-btn downvote" name="downvote">&darr;</button>
+                                        </form>
                                     </div>
                                 </div>
                                 {% for tag in post.tags.all %}
@@ -218,7 +222,7 @@
 <!-- Bootstrap JS and Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-<script>
+<!-- <script>
     function handleVote(event, button, voteType) {
         event.preventDefault();
         event.stopPropagation(); // Prevents the click from bubbling up to the link
@@ -295,6 +299,6 @@
         // Update the vote count displayed
         voteCountElement.textContent = voteCount;
     }
-</script>
+</script> -->
 </body>
 </html>
